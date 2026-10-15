@@ -14,7 +14,7 @@ const port = process.env.PORT || 8000;
 
 // const compass_string = "mongodb://localhost:27017/oladepoisrael913_db";
 const atlas_string = process.env.MONGO_URI;
-
+console.log("MONGO_URI available:", Boolean(process.env.MONGO_URI));
 
 if (!atlas_string) {
   console.error("MONGO_URI is not set. Add it in Render > Environment.");

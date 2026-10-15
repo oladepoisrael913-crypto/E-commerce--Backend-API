@@ -6,8 +6,7 @@ const cloudinary = require("../Config/cloudinary.js");
 const uploadProduct = async (req, res) => {
   try {
     const getUserId = await userModel.findById(req.params.userId);
-    const { name, description, price, quantity, category, stock, } =
-      req.body;
+    const { name, description, price, quantity, category, stock } = req.body;
     if (!getUserId) {
       return res.status(404).json({ message: "User not found" });
     }
@@ -26,7 +25,7 @@ const uploadProduct = async (req, res) => {
       quantity,
       category,
       stock,
-      image: image,
+      image: imageUrl,
     });
 
     await getUserId.products.push(newProduct._id);

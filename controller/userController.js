@@ -1,13 +1,7 @@
 const userModel = require("../model/userModel.js");
 const bcrypt = require("bcrypt");
-
-// CRUD
-// Create User (POST)
-// Read User (GET)
-// Update User (PUT)
-// Delete User (DELETE)
-
 // CREATE USER
+
 const createUser = async (req, res) => {
   try {
     const { name, email, password } = req.body;
@@ -43,7 +37,6 @@ const LoginUser = async (req, res) => {
     if (!isMatch) {
       return res.status(401).json({ message: "Invalid password" });
     }
-
     return res.status(200).json({
       message: "Login successful",
       data: user,
@@ -52,6 +45,7 @@ const LoginUser = async (req, res) => {
     return res.status(500).json({ message: error.message });
   }
 };
+
 
 // GENERAL GET
 const getAllUsers = async (req, res) => {
@@ -137,4 +131,4 @@ module.exports = {
   getSingleUser,
   updateUser,
   deleteUser,
-};
+}
