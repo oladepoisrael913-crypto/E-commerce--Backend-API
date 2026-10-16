@@ -1,141 +1,332 @@
-E-commerce API
+ E-commerce API
 
-A REST API for managing users and products, built with Node.js, Express and MongoDB. It supports JWT authentication, input validation and product image upload through Cloudinary.
+A RESTful API for managing users and ecommerce products, built with **Node.js, Express.js, and MongoDB**.
+
+The API supports JWT authentication, input validation, product management, and image uploads using Multer and Cloudinary.
 
 Live API: https://folawio-db.onrender.com
 
+---
 
-FEATURES
+ Features
 
-• User accounts with secure login (JWT authentication)
-• Input validation with clear error messages
-• Product creation with image upload (Multer + Cloudinary)
-• Product listing, with images returned as Cloudinary URLs
-• Deployed on Render with MongoDB Atlas
+- User registration and login with JWT authentication
+- Authentication middleware for protected routes
+- Request validation and error handling
+- Product creation, retrieval, updating, and deletion
+- Product image uploads using Multer
+- Cloudinary integration for image hosting
+- MongoDB database integration using Mongoose
+- Product records containing hosted image URLs
+- Deployment on Render with MongoDB Atlas
 
+---
 
-TECH STACK
+ Tech Stack
 
-• Node.js and Express
-• MongoDB and Mongoose
-• JSON Web Tokens (JWT)
-• Multer and Cloudinary (image upload)
-• dotenv (environment variables)
+- Node.js
+- Express.js
+- MongoDB Atlas
+- Mongoose
+- JSON Web Tokens (JWT)
+- Multer
+- Cloudinary
+- dotenv
+- Postman
+- Render
 
+---
 
-PROJECT STRUCTURE
+## Project Structure
 
-.
-├── server.js              — App setup, route mounting, database connection
+```text
+FOLAWIO-DB/
+├── index.js
+├── package.json
 ├── routes/
-│   ├── userRoutes.js      — /users endpoints
-│   └── productRoutes.js   — /products endpoints
+│   ├── userRoutes.js
+│   └── productRoutes.js
 ├── controller/
 │   └── productController.js
-└── Config/
-    └── multer.js          — Multer + Cloudinary upload configuration
+├── model/
+│   ├── userModel.js
+│   └── productModel.js
+├── middleware/
+│   ├── auth.js
+│   └── validation.js
+├── Config/
+│   ├── multer.js
+│   └── cloudinary.js
+└── .env
+```
 
+*Make sure the file and folder names match your actual repository.*
 
-GETTING STARTED
+---
 
-1. Clone the repository and install dependencies:
+## Getting Started
 
-git clone <your-repo-url>
+### Prerequisites
+
+- Node.js and npm
+- MongoDB Atlas account or a MongoDB instance
+- Cloudinary account
+
+### 1. Clone the Repository
+
+```bash
+git clone <your-repository-url>
 cd FOLAWIO-DB
 npm install
+```
 
-2. Create a .env file in the project root:
+Replace `<your-repository-url>` with your actual GitHub repository URL.
 
+### 2. Configure Environment Variables
+
+Create a `.env` file in the project root and add:
+
+```env
 MONGO_URI=your-mongodb-connection-string
 PORT=8000
-JWT_SECRET=replace-with-a-long-random-string
+JWT_SECRET=your-long-random-secret
 CLOUDINARY_CLOUD_NAME=your-cloud-name
 CLOUDINARY_API_KEY=your-api-key
 CLOUDINARY_API_SECRET=your-api-secret
+```
 
-• MONGO_URI is required. The server stops with an error if it is missing.
-• PORT is optional and defaults to 8000.
-• Never commit your .env file.
+- Use the exact variable names required by your code.
+- `MONGO_URI` connects the application to MongoDB.
+- `PORT` specifies the local server port.
+- `JWT_SECRET` is used for signing or verifying authentication tokens.
+- The Cloudinary variables configure image uploads.
+- Never commit your `.env` file or expose your credentials publicly.
 
-3. Start the server:
+### 3. Start the Server
 
-node server.js
+Run:
 
-The API runs at http://localhost:8000
+```bash
+npm start
+```
 
+Alternatively, if your `package.json` does not define a start script:
 
-API REFERENCE
+```bash
+node index.js
+```
 
-The base URL is http://localhost:8000 locally, or https://folawio-db.onrender.com on the live server.
+The local API should be available at:
 
-Health
+`http://localhost:8000`
 
-• GET / — Returns "Server Is Active"
+---
 
-Users
+## API Reference
 
-• POST /users/TODO — Create a user
-• POST /users/TODO — Log in and receive a JWT
-• GET /users/TODO — Get all users
-• GET /users/TODO — Get one user
-• PATCH /users/TODO — Update a user
-• DELETE /users/TODO — Delete a user
+### Base URLs
 
-Products
+- **Local:** `http://localhost:8000`
+- **Production:** `https://folawio-db.onrender.com`
 
-• POST /products/upload/:userId — Upload a product with an image
-• GET /products/getAll — List all products
+### Health Check
 
-Upload a product
-
-POST /products/upload/:userId
-
-Send the request as form-data (not raw JSON):
-
-• image (File) — Exactly one image file
-• name (Text) — Product name
-• description (Text) — Short description
-• price (Text) — Required, a number
-• quantity (Text) — A number
-• category (Text) — Required, for example Women
-
-The image is uploaded to Cloudinary and its URL is saved with the product.
-
-List all products
-
-GET /products/getAll
+- **Method:** GET
+- **Endpoint:** `/`
+- **Description:** Checks whether the API server is responding.
 
 Example response:
 
+```text
+Server Is Active
+```
+
+### Product Endpoints
+
+- **POST** `/products/upload/:userId` — Create a product and upload an image.
+- **GET** `/products/getAll` — Retrieve all products.
+- **GET** `/products/:id` — Retrieve a product by its ID.
+- **PATCH** `/products/update/:productId` — Update a product.
+- **DELETE** `/products/delete/:productId` — Delete a product.
+
+*Confirm these endpoint paths against your current `productRoutes.js` before publishing.*
+
+### Create a Product
+
+- **Method:** POST
+- **Endpoint:** `/products/upload/:userId`
+- **Description:** Creates a product and uploads its image to Cloudinary.
+
+Replace `:userId` with the relevant user's MongoDB ID.
+
+In Postman:
+
+- Select **Body**.
+- Choose **form-data**.
+- Add the following fields:
+
+  - `name` — Text: product name
+  - `description` — Text: product description
+  - `price` — Text: product price
+  - `quantity` — Text: available quantity
+  - `category` — Text: product category
+  - `stock` — Text: stock availability, if required
+  - `image` — File: product image
+
+**Important:** The file field must be named `image` to match the Multer middleware.
+
+The uploaded image is hosted on Cloudinary, and its secure URL is saved with the product record.
+
+### Retrieve All Products
+
+- **Method:** GET
+- **Endpoint:** `/products/getAll`
+- **Description:** Returns the products stored in MongoDB.
+
+Example response:
+
+```json
 [
   {
-    "_id": "6ad1f7258c61ef627fd54b15",
+    "_id": "example-product-id",
     "name": "Wig",
     "description": "this is a ghana wig",
     "price": 35000,
     "quantity": 20,
     "category": "Women",
     "stock": true,
-    "image": "https://res.cloudinary.com/<cloud-name>/image/upload/.../fbmu9mrnmx9wisbzlrtm.jpg",
+    "image": "https://res.cloudinary.com/your-cloud/image/upload/example.jpg",
     "createdAt": "2026-10-16T10:06:29.644Z",
     "updatedAt": "2026-10-16T10:06:29.644Z"
   }
 ]
+```
 
+This is an example response; actual values depend on the database.
 
-DATA MODELS
+### Retrieve One Product
 
-• Product: name, description, price, quantity, category, stock, image (Cloudinary URL), and timestamps
-• User: account details with a hashed password and timestamps
+- **Method:** GET
+- **Endpoint:** `/products/:id`
+- **Description:** Retrieves a specific product using its MongoDB ID.
 
+Replace `:id` with the product's actual ID.
 
-DEPLOYMENT
+### Update a Product
 
-• The API is deployed on Render and uses MongoDB Atlas for the database.
-• Add the same environment variables from your .env file in the Render dashboard under Environment.
-• Render redeploys automatically when you push to GitHub.
+- **Method:** PATCH
+- **Endpoint:** `/products/update/:productId`
+- **Description:** Updates the specified product.
 
+Replace `:productId` with the product's actual ID.
 
-AUTHOR
+- Send the fields you want to update.
+- If uploading a replacement image, use `multipart/form-data`.
+- Name the image field `image`.
 
-Built by Oladepo Israel (FOLAWIYO). Open to backend and Flutter freelance projects.
+### Delete a Product
+
+- **Method:** DELETE
+- **Endpoint:** `/products/delete/:productId`
+- **Description:** Deletes a product using its ID.
+
+Replace `:productId` with the product's actual ID.
+
+---
+
+## User Endpoints
+
+The API includes user account functionality and JWT authentication.
+
+Document the actual routes from `routes/userRoutes.js`, including:
+
+- User registration
+- User login
+- Retrieving user information
+- Updating user information
+- Deleting a user
+- Authentication requirements for protected endpoints
+
+Replace any placeholder paths with the exact routes defined in your code.
+
+---
+
+## Middleware
+
+### Authentication Middleware
+
+**File:** `middleware/auth.js`
+
+- Handles JWT verification and access control for protected routes, according to the implementation.
+
+### Validation Middleware
+
+**File:** `middleware/validation.js`
+
+- Validates incoming request data.
+- Helps reject invalid requests before they reach the relevant controllers.
+
+---
+
+## Data Models
+
+### Product Model
+
+Product records include:
+
+- `name`
+- `description`
+- `price`
+- `quantity`
+- `category`
+- `stock`
+- `image` — Cloudinary image URL
+- `createdAt`
+- `updatedAt`
+
+### User Model
+
+User records contain account information, including:
+
+- User details
+- Hashed password
+- Timestamps
+
+JWT authentication is used for protected operations where configured.
+
+---
+
+## Deployment
+
+The API is deployed on Render and uses MongoDB Atlas for database storage.
+
+- Configure the required environment variables in the Render dashboard.
+- Ensure MongoDB Atlas allows connections from the deployed application.
+- Use the correct start command.
+- Check Render logs if the service fails to start.
+- Test the deployed endpoints using Postman.
+
+Never expose secret environment variable values in public documentation or screenshots.
+
+ Testing
+
+The API has been tested locally and on Render using Postman.
+
+Recommended test cases include:
+
+- Successful user registration and login
+- Authentication with valid and invalid tokens
+- Validation of missing or invalid input
+- Product creation and image upload
+- Retrieving all products
+- Retrieving a product by ID
+- Updating product details and images
+- Deleting products
+- Handling nonexistent product IDs
+- Handling unauthorized requests
+
+ Author
+
+Oladepo Israel (FOLAWIYO)
+
+Backend and Flutter developer interested in building practical APIs and mobile applications.
