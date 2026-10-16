@@ -1,4 +1,4 @@
-FOLAWIO-DB
+E-commerce API
 
 A REST API for managing users and products, built with Node.js, Express and MongoDB. It supports JWT authentication, input validation and product image upload through Cloudinary.
 
