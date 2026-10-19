@@ -63,23 +63,23 @@ FOLAWIO-DB/
 
  Getting Started
 
-### Prerequisites
+Prerequisites
 
 - Node.js and npm
 - MongoDB Atlas account or a MongoDB instance
 - Cloudinary account
 
-### 1. Clone the Repository
+1. Clone the Repository
 
-```bash
+bash
 git clone <https://github.com/oladepoisrael913-crypto/E-commerce--Backend-API>
 cd FOLAWIO-DB
 npm install
-```
+
 
 Replace `<your-repository-url>` with your actual GitHub repository URL.
 
-### 2. Configure Environment Variables
+2. Configure Environment Variables
 
 Create a `.env` file in the project root and add:
 
@@ -99,7 +99,7 @@ CLOUDINARY_API_SECRET=your-api-secret
 - The Cloudinary variables configure image uploads.
 - Never commit your `.env` file or expose your credentials publicly.
 
-### 3. Start the Server
+3. Start the Server
 
 Run:
 
@@ -119,14 +119,14 @@ The local API should be available at:
 
 ---
 
-## API Reference
+API Reference
 
-### Base URLs
+Base URLs
 
 - **Local:** `http://localhost:8000`
 - **Production:** `https://folawio-db.onrender.com`
 
-### Health Check
+Health Check
 
 - **Method:** GET
 - **Endpoint:** `/`
