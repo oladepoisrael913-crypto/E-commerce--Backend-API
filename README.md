@@ -58,13 +58,10 @@ FOLAWIO-DB/
 │   ├── multer.js
 │   └── cloudinary.js
 └── .env
-```
-
-*Make sure the file and folder names match your actual repository.*
 
 ---
 
-## Getting Started
+ Getting Started
 
 ### Prerequisites
 
@@ -75,7 +72,7 @@ FOLAWIO-DB/
 ### 1. Clone the Repository
 
 ```bash
-git clone <your-repository-url>
+git clone <https://github.com/oladepoisrael913-crypto/E-commerce--Backend-API>
 cd FOLAWIO-DB
 npm install
 ```
