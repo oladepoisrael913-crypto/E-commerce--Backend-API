@@ -77,13 +77,11 @@ cd FOLAWIO-DB
 npm install
 
 
-Replace `<your-repository-url>` with your actual GitHub repository URL.
-
 2. Configure Environment Variables
 
 Create a `.env` file in the project root and add:
 
-```env
+ env
 MONGO_URI=your-mongodb-connection-string
 PORT=8000
 JWT_SECRET=your-long-random-secret
@@ -123,14 +121,14 @@ API Reference
 
 Base URLs
 
-- **Local:** `http://localhost:8000`
-- **Production:** `https://folawio-db.onrender.com`
+- Local: `http://localhost:8000`
+- Production: `https://folawio-db.onrender.com`
 
 Health Check
 
-- **Method:** GET
-- **Endpoint:** `/`
-- **Description:** Checks whether the API server is responding.
+- Method: GET
+- Endpoint: `/`
+- Description: Checks whether the API server is responding.
 
 Example response:
 
@@ -138,28 +136,28 @@ Example response:
 Server Is Active
 ```
 
-### Product Endpoints
+ Product Endpoints
 
-- **POST** `/products/upload/:userId` — Create a product and upload an image.
-- **GET** `/products/getAll` — Retrieve all products.
-- **GET** `/products/:id` — Retrieve a product by its ID.
-- **PATCH** `/products/update/:productId` — Update a product.
+- POST `/products/upload/:userId` — Create a product and upload an image.
+- GET `/products/getAll` — Retrieve all products.
+- GET `/products/:id` — Retrieve a product by its ID.
+- PATCH `/products/update/:productId` — Update a product.
 - **DELETE** `/products/delete/:productId` — Delete a product.
 
 *Confirm these endpoint paths against your current `productRoutes.js` before publishing.*
 
-### Create a Product
+Create a Product
 
-- **Method:** POST
-- **Endpoint:** `/products/upload/:userId`
-- **Description:** Creates a product and uploads its image to Cloudinary.
+- Method: POST
+- Endpoint: `/products/upload/:userId`
+- Description: Creates a product and uploads its image to Cloudinary.
 
 Replace `:userId` with the relevant user's MongoDB ID.
 
 In Postman:
 
-- Select **Body**.
-- Choose **form-data**.
+- Select Body.
+- Choose form-data.
 - Add the following fields:
 
   - `name` — Text: product name
@@ -170,15 +168,15 @@ In Postman:
   - `stock` — Text: stock availability, if required
   - `image` — File: product image
 
-**Important:** The file field must be named `image` to match the Multer middleware.
+Important: The file field must be named `image` to match the Multer middleware.
 
 The uploaded image is hosted on Cloudinary, and its secure URL is saved with the product record.
 
-### Retrieve All Products
+ Retrieve All Products
 
-- **Method:** GET
-- **Endpoint:** `/products/getAll`
-- **Description:** Returns the products stored in MongoDB.
+- Method: GET
+- Endpoint: `/products/getAll`
+- Description: Returns the products stored in MongoDB.
 
 Example response:
 
@@ -209,11 +207,11 @@ This is an example response; actual values depend on the database.
 
 Replace `:id` with the product's actual ID.
 
-### Update a Product
+ Update a Product
 
-- **Method:** PATCH
-- **Endpoint:** `/products/update/:productId`
-- **Description:** Updates the specified product.
+- Method: PATCH
+- Endpoint: `/products/update/:productId`
+- Description: Updates the specified product.
 
 Replace `:productId` with the product's actual ID.
 
@@ -221,17 +219,17 @@ Replace `:productId` with the product's actual ID.
 - If uploading a replacement image, use `multipart/form-data`.
 - Name the image field `image`.
 
-### Delete a Product
+ Delete a Product
 
-- **Method:** DELETE
-- **Endpoint:** `/products/delete/:productId`
-- **Description:** Deletes a product using its ID.
+- Method: DELETE
+- Endpoint: `/products/delete/:productId`
+- Description: Deletes a product using its ID.
 
 Replace `:productId` with the product's actual ID.
 
 ---
 
-## User Endpoints
+ User Endpoints
 
 The API includes user account functionality and JWT authentication.
 
@@ -248,26 +246,26 @@ Replace any placeholder paths with the exact routes defined in your code.
 
 ---
 
-## Middleware
+ Middleware
 
-### Authentication Middleware
+ Authentication Middleware
 
-**File:** `middleware/auth.js`
+File: `middleware/auth.js`
 
 - Handles JWT verification and access control for protected routes, according to the implementation.
 
-### Validation Middleware
+ Validation Middleware
 
-**File:** `middleware/validation.js`
+File: `middleware/validation.js`
 
 - Validates incoming request data.
 - Helps reject invalid requests before they reach the relevant controllers.
 
 ---
 
-## Data Models
+ Data Models
 
-### Product Model
+ Product Model
 
 Product records include:
 
@@ -281,7 +279,7 @@ Product records include:
 - `createdAt`
 - `updatedAt`
 
-### User Model
+ User Model
 
 User records contain account information, including:
 
@@ -293,7 +291,7 @@ JWT authentication is used for protected operations where configured.
 
 ---
 
-## Deployment
+ Deployment
 
 The API is deployed on Render and uses MongoDB Atlas for database storage.
 
